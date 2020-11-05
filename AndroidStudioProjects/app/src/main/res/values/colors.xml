@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#6200EE</color>
+    <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorAccent">#03DAC5</color>
+
+    <!-- Primary color of the app (shown in the app bar) -->
+    <color name="primary_color">#4A312A</color>
+
+    <!-- Primary dark color of the app (shown in the status bar) -->
+    <color name="primary_dark_color">#2F1D1A</color>
+
+    <!-- Background color for app -->
+    <color name="tan_background">#FFF7DA</color>
+
+</resources>
