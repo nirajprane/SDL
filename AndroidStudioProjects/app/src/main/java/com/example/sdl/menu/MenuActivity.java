@@ -1,13 +1,16 @@
 package com.example.sdl.menu;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.sdl.R;
@@ -39,9 +42,9 @@ public class MenuActivity extends AppCompatActivity {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
 
         // Reference to your entire Firebase database
-        DatabaseReference parentReference = database.getReference();
+        DatabaseReference parentReference;
+        parentReference = database.getReference("menu");
 
-        //reading data from firebase
         parentReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -54,7 +57,7 @@ public class MenuActivity extends AppCompatActivity {
                     snapshot.child("titre").getValue();
 
                     DatabaseReference childReference =
-                            FirebaseDatabase.getInstance().getReference().child(ParentKey);
+                            FirebaseDatabase.getInstance().getReference().child("menu/"+ParentKey);
                     childReference.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
@@ -142,7 +145,6 @@ public class MenuActivity extends AppCompatActivity {
                 holder.listGroup.setOnClickListener(  new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-
                         Toast toast = Toast.makeText(getApplicationContext(), group.toString(), Toast.LENGTH_SHORT);
                         toast.show();
                     }
@@ -153,7 +155,6 @@ public class MenuActivity extends AppCompatActivity {
 
 
     }
-
 
 
 

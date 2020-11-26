@@ -27,7 +27,8 @@
         android:text="Username"
         app:layout_constraintBottom_toTopOf="@+id/textViewPassword"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView" />
+        app:layout_constraintTop_toTopOf="@+id/textView"
+        />
 
     <EditText
         android:id="@+id/editTextUserName"
