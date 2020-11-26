@@ -5,14 +5,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.example.sdl.ActivityForTable;
+import com.example.sdl.MainActivity;
+import com.example.sdl.OrderActivity;
 import com.example.sdl.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -25,15 +31,19 @@ import com.thoughtbot.expandablerecyclerview.models.ExpandableGroup;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class MenuActivity extends AppCompatActivity {
-
     private RecyclerView recycler_view;
-
+    private Button confirm;
+    private Button reset;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
+        //Define buttons
+        confirm= (Button) findViewById(R.id.confirm_button);
+        reset= (Button) findViewById(R.id.reset_button);
         //Define recycleview
         recycler_view = (RecyclerView) findViewById(R.id.recycler_Expand);
         recycler_view.setLayoutManager(new LinearLayoutManager(this));
@@ -95,18 +105,32 @@ public class MenuActivity extends AppCompatActivity {
 
             }
         });
+        confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent orderIntent = new Intent(MenuActivity.this, OrderActivity.class);
+                orderIntent.putExtra("key", menuList);
+                startActivity(orderIntent);
+            }
+        });
+
+        reset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                menuList.clear();
+            }
+        });
 
     }
 
 
-
+    ArrayList<String> menuList = new ArrayList<String>( );
     public class DocExpandableRecyclerAdapter extends ExpandableRecyclerViewAdapter<MyParentViewHolder,MyChildViewHolder> {
 
 
         public DocExpandableRecyclerAdapter(List<ParentList> groups) {
             super(groups);
         }
-
         @Override
         public MyParentViewHolder onCreateGroupViewHolder(ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.parent_item, parent, false);
@@ -121,15 +145,22 @@ public class MenuActivity extends AppCompatActivity {
 
         @Override
         public void onBindChildViewHolder(MyChildViewHolder holder, int flatPosition, ExpandableGroup group, int childIndex) {
-
             final ChildList childItem = ((ParentList) group).getItems().get(childIndex);
+
             holder.onBind(childItem.getTitle());
-            final String TitleChild=group.getTitle();
-            holder.listChild.setOnClickListener(new View.OnClickListener() {
+            final String TitleChild=childItem.getTitle();
+            holder.check.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast toast = Toast.makeText(getApplicationContext(), TitleChild, Toast.LENGTH_SHORT);
+                    menuList.add(TitleChild);
+                    Toast toast= null;
+                    if (toast!= null) {
+                        toast.cancel();
+                    }
+                    toast = Toast.makeText(getApplicationContext(), menuList.size()+" item selected", Toast.LENGTH_SHORT);
                     toast.show();
+
+
                 }
 
             });

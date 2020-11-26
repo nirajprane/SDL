@@ -3,6 +3,8 @@ package com.example.sdl.menu;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.sdl.R;
@@ -55,10 +57,13 @@ public class ChildList implements Parcelable {
 class MyChildViewHolder extends ChildViewHolder {
 
     public TextView listChild;
+    public RelativeLayout check;
 
     public MyChildViewHolder(View itemView) {
         super(itemView);
         listChild = (TextView) itemView.findViewById(R.id.listChild);
+        check=(RelativeLayout) itemView.findViewById(R.id.to_check_layout);
+
 
     }
 
